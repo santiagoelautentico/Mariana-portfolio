@@ -1,0 +1,15 @@
+{
+    "id": "sessionLucia",
+    "title": "Sesión de fotos Callejera",
+    "year": 2026,
+    "model": "Lucía Heuer",
+    "cover": "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382114/PortfolioMari/session-1/cover_yvyjdr.webp",
+    "photos": [
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382109/PortfolioMari/session-1/foto-1_xii7dl.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382112/PortfolioMari/session-1/foto-2_dvvywj.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382111/PortfolioMari/session-1/foto-3_ssg36a.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382110/PortfolioMari/session-1/foto-4_y7ltjc.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382107/PortfolioMari/session-1/foto-5_elu3fd.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382108/PortfolioMari/session-1/foto-6_hijysz.webp"
+    ]
+}

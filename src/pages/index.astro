@@ -1,0 +1,219 @@
+---
+import Layout from "../../src/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const proyectos = await getCollection("proyectos");
+  return proyectos.map((proyecto) => ({
+    params: { id: proyecto.data.id },
+    props: { proyecto },
+  }));
+}
+
+const { proyecto } = Astro.props;
+const proyectos = await getCollection("proyectos");
+---
+
+<Layout title="Mariana Ferrari — Galería" activeTab="gallery">
+  <h1
+    slot="header-title"
+    class="brand-title home-title mask-reveal"
+    transition:name="brand-name"
+  >
+    MARIANA FERRARI
+  </h1>
+
+  <section class="gallery-container">
+    <div class="gallery-track" id="gallery-track">
+      {
+        proyectos.map((proyecto) => (
+          <a
+            href={`/proyectos/${proyecto.data.id}`}
+            class="project-card"
+            data-id={proyecto.data.id}
+          >
+            <div
+              class="image-wrapper"
+              transition:name={`cover-${proyecto.data.id}`}
+            >
+              <img
+                src={proyecto.data.cover}
+                alt={proyecto.data.title}
+                loading="lazy"
+              />
+            </div>
+          </a>
+        ))
+      }
+      {
+        proyectos.map((proyecto) => (
+          <a
+            href={`/proyectos/${proyecto.data.id}`}
+            class="project-card"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <div class="image-wrapper">
+              <img src={proyecto.data.cover} alt="" loading="lazy" />
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+  <div class="blur blur-left"></div>
+  <div class="blur blur-right"></div>
+</Layout>
+
+<style is:global>
+  header.navbar {
+    flex-direction: column-reverse;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-top: 3rem;
+  }
+</style>
+
+<style>
+  .blur {
+    position: absolute;
+    top: 0;
+    width: 4rem;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    );
+  }
+  .blur-left {
+    left: 0;
+  }
+  .blur-right {
+    right: 0;
+    transform: rotate(180deg);
+  }
+  .home-title {
+    font-size: 5.5rem;
+    text-align: center;
+    margin: 0;
+  }
+  .gallery-container {
+    margin-top: 6rem;
+  }
+  .gallery-track {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    width: 100%;
+    padding-left: 5rem;
+  }
+  .image-wrapper {
+    width: 30em;
+    height: 25em;
+    overflow: hidden;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+    border-radius: 5px;
+  }
+  .image-wrapper img:hover {
+    transform: scale(1.15);
+  }
+  .brand-title {
+    font-family: "PP Kyoto Light";
+    font-size: 8rem;
+    color: #2e2e2e;
+    padding-bottom: 2rem;
+  }
+  @media (max-width: 768px) {
+    .brand-title {
+      font-size: 4rem;
+      line-height: 1.5;
+    }
+    .gallery-track {
+      padding-left: 1rem;
+    }
+    .image-wrapper {
+      width: 25em;
+      height: 20em;
+    }
+  }
+  .brand-title {
+    font-family: "PP Kyoto Light";
+    color: #2e2e2e;
+  }
+  .home-title {
+    font-size: 5.5rem;
+    text-align: center;
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .home-title {
+      font-size: 3rem;
+    }
+  }
+</style>
+
+<script>
+  import { animate, inView, stagger } from "motion";
+
+  document.addEventListener("astro:page-load", () => {
+    const hasVisited = sessionStorage.getItem("animationsPlayed");
+    if (!hasVisited) {
+      animate(
+        ".nav-pills .pill",
+        { y: [50, 0], opacity: [0, 1] },
+        { delay: 0.3, duration: 0.6, ease: [0.5, 1, 0.3, 2] },
+      );
+      animate(
+        ".home-title",
+        { y: [50, 0], opacity: [0, 1] },
+        { delay: 0.3, duration: 0.6, ease: "easeInOut" },
+      );
+      inView(".gallery-track", () => {
+        animate(
+          ".image-wrapper",
+          { opacity: [0, 1], y: [24, 0] },
+          {
+            delay: stagger(0.15, { startDelay: 0.3 }),
+            duration: 1.1,
+            ease: "easeOut",
+          },
+        );
+      });
+      sessionStorage.setItem("animationsPlayed", "true");
+    }
+  });
+  const track = document.getElementById("gallery-track");
+  track?.addEventListener("click", (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>(
+      ".project-card",
+    );
+    if (!card) return;
+    const id = card.dataset.id;
+
+    // La card clickeada (aunque sea de la 2ª tanda) es la que "viaja"
+    track.querySelectorAll<HTMLElement>(".image-wrapper").forEach((w) => {
+      w.style.viewTransitionName = "none";
+    });
+    const wrapper = card.querySelector<HTMLElement>(".image-wrapper");
+    if (wrapper) wrapper.style.viewTransitionName = `cover-${id}`;
+
+    // Ratio real de la foto, para que el proyecto la reciba con la forma correcta
+    const img = card.querySelector("img");
+    if (img?.naturalWidth) {
+      sessionStorage.setItem(
+        `ar:${id}`,
+        String(img.naturalWidth / img.naturalHeight),
+      );
+    }
+  });
+</script>

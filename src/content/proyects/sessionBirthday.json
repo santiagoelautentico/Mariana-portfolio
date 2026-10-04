@@ -1,0 +1,13 @@
+{
+    "id": "sessionBirthday",
+    "title": "Sesión de cumpleaños",
+    "year": 2026,
+    "model": "",
+    "cover": "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382043/PortfolioMari/session-3/cover_sewfbe.webp",
+    "photos": [
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382043/PortfolioMari/session-3/foto-3_zf8gpy.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382042/PortfolioMari/session-3/foto-4_ctpzdn.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382044/PortfolioMari/session-3/foto-2_jfgumz.webp",
+        "https://res.cloudinary.com/dabfmsocx/image/upload/v1790382046/PortfolioMari/session-3/foto-1_vllruf.webp"
+    ]
+}

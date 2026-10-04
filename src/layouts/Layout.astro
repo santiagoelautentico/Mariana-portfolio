@@ -1,0 +1,198 @@
+---
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  activeTab?: "gallery" | "aboutMe" | "contact";
+}
+
+const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
+  Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <header class="navbar">
+      <div
+        class={`${activeTab === "gallery" ? "container-navs" : "container-navs-inner"}`}
+      >
+        <nav
+          class="nav-pills"
+          data-flip-id="nav-pills"
+          transition:name="nav-pills"
+          transition:animate="initial"
+        >
+          <a href="/" class={`pill ${activeTab === "gallery" ? "active" : ""}`}>
+            Galería
+          </a>
+          <a
+            href="/aboutMe"
+            class={`pill ${activeTab === "aboutMe" ? "active" : ""}`}
+          >
+            Sobre mí
+          </a>
+          <a
+            href="/contact"
+            class={`pill ${activeTab === "contact" ? "active" : ""}`}
+          >
+            Contacto
+          </a>
+        </nav>
+
+        <!-- Aquí entra el h1 cuando la página se lo mande -->
+        <slot name="header-title" />
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  .brand-title {
+    font-family: "PP Kyoto Light";
+    font-weight: 200;
+    line-height: 1;
+    margin: 0;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
+  }
+  ::view-transition-group(brand-name),
+  ::view-transition-group(nav-pills),
+  ::view-transition-group(.gallery-cover) {
+    animation-duration: 0.7s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* El nombre ahora va en el wrapper, no en el <img> */
+  .image-wrapper {
+    view-transition-class: gallery-cover;
+  }
+  ::view-transition-old(.gallery-cover),
+  ::view-transition-new(.gallery-cover) {
+    height: 100%;
+    object-fit: cover;
+  }
+  @font-face {
+    font-family: "PP Kyoto Light";
+    src: url("../assets/fonts/PPKyoto-Light.otf");
+    font-weight: 100;
+  }
+
+  @font-face {
+    font-family: "PP Kyoto Thin";
+    src: url("../assets/fonts/PPKyoto-Thin.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "PP Mori Regular";
+    src: url("../assets/fonts/PPMori-Regular.otf") format("opentype");
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  html {
+    list-style: none;
+    background-color: #f4f3f0;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-family: "PP Mori Regular";
+  }
+
+  header.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 2rem;
+    padding-inline: 8rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .nav-pills {
+    display: flex;
+    gap: 2rem;
+    z-index: 10;
+    width: max-content; /* mismo tamaño en todas las páginas */
+  }
+
+  .pill {
+    padding: 0.5rem 1rem;
+    border-radius: 20rem;
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .pill.active {
+    background-color: rgba(245, 153, 197, 0.7);
+    border: 1px solid rgb(245, 153, 198);
+  }
+
+  .brand-title {
+    font-family: "PP Kyoto Light";
+    font-weight: 200;
+  }
+  .container-navs {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .container-navs-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    header.navbar {
+      padding-inline: 1rem;
+    }
+    .nav-pills {
+      gap: 1rem;
+      width: max-content; /* mismo tamaño en todas las páginas */
+    }
+    .pill {
+      font-size: 0.75rem;
+    }
+    .nav-pills {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container-navs-inner {
+      flex-direction: column-reverse;
+      gap: 1rem;
+      align-items: baseline;
+      padding-inline: 2rem;
+    }
+  }
+</style>

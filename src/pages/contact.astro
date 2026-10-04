@@ -1,0 +1,135 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Mariana Ferrari — Contacto" activeTab="contact">
+  <h1
+    slot="header-title"
+    class="brand-title header-title"
+    transition:name="brand-name"
+  >
+    MARIANA FERRARI
+  </h1>
+
+  <div class="content-about">
+    <section class="contact-section">
+      <div class="title-block">
+        <h2 class="title-contact">Contacto</h2>
+        <span class="form-label">Manda tu consulta:</span>
+        <form>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nombre"
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Mensaje"
+            required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .header-title {
+    font-size: 2.5rem;
+  }
+  header.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 2rem;
+  }
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+
+  .title-block {
+    display: flex;
+    flex-direction: column;
+    align-self: center; /* centra el bloque en el viewport */
+    width: fit-content; /* el bloque mide lo mismo que su hijo más ancho (el h2) */
+  }
+
+  .title-contact {
+    margin: 0;
+    padding: 0;
+    font-size: 8rem;
+    font-family: "PP Kyoto Light";
+    font-weight: 50;
+    line-height: 1;
+  }
+
+  .form-label {
+    align-self: flex-start;
+    font-family: "PP Mori Regular";
+    margin-bottom: 2rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  input,
+  textarea {
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #f599c6;
+    background-color: #ededed52;
+    font-family: "PP Kyoto Light";
+  }
+  button {
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #f599c6;
+    background-color: #f599c571;
+    font-family: "PP Mori Regular";
+    cursor: pointer;
+    margin-inline: 10rem;
+    color: rgb(57, 13, 20);
+    transition: all 0.3s ease;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+      rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  }
+  button:hover {
+    background-color: #f599c5;
+    border: 1px solid #ff007d;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+      rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  }
+</style>
+<script>
+  import { animate, press, hover } from "motion";
+
+  const selector = "form button[type='submit']";
+
+  hover(selector, (element) => {
+    animate(element, { scale: 1.1 });
+
+    return () => animate(element, { scale: 1 });
+  });
+
+  press(selector, (element) => {
+    animate(element, { scale: 0.9 }, { duration: 0.15 });
+
+    return () => animate(element, { scale: 1.1 }, { duration: 0.2 });
+  });
+</script>

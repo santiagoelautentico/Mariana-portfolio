@@ -100,7 +100,7 @@ const proyectos = await getCollection("proyectos");
     margin: 0;
   }
   .gallery-container {
-    margin-top: 6rem;
+    margin-top: 2em;
   }
   .gallery-track {
     display: flex;
@@ -110,8 +110,9 @@ const proyectos = await getCollection("proyectos");
     padding-left: 5rem;
   }
   .image-wrapper {
-    width: 30em;
-    height: 25em;
+    height: clamp(150px, 50vh, 25em);
+    aspect-ratio: 30 / 25;
+    width: auto;
     overflow: hidden;
   }
 
@@ -142,8 +143,8 @@ const proyectos = await getCollection("proyectos");
       padding-left: 1rem;
     }
     .image-wrapper {
-      width: 25em;
-      height: 20em;
+      width: 20em;
+      height: 15em;
     }
   }
   .brand-title {

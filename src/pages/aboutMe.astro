@@ -45,14 +45,27 @@ import Layout from "../layouts/Layout.astro";
       <hr class="hr" />
       <div class="goals-container">
         <h2 class="title-about">Mis Logros</h2>
-        <div class="ucu">
-          <img
-            class="ucu-logo"
-            src="https://res.cloudinary.com/dabfmsocx/image/upload/v1790536542/samples/Logo-Universidad-Catolica_okmf1w.svg"
-            alt="Logo Universidad Católica"
-          />
-          <span class="line"></span>
-          <span class="ucu-text">Lic. Comunicación Audiovisual</span>
+        <div class="goals-lines-container">
+          <div class="goals-line">
+            <img
+              class="ucu-logo"
+              src="https://res.cloudinary.com/dabfmsocx/image/upload/v1790536542/samples/Logo-Universidad-Catolica_okmf1w.svg"
+              alt="Logo Universidad Católica"
+            />
+            <span class="line"></span>
+            <span class="ucu-text">Lic. Comunicación Audiovisual</span>
+          </div>
+          <div class="goals-line">
+            <img
+              class="Coreixample-logo"
+              src="https://res.cloudinary.com/dabfmsocx/image/upload/v1791425436/movieIcon_folbkf.svg"
+              alt="Logo Universidad Católica"
+            />
+            <span class="line"></span>
+            <span class="ucu-text"
+              >Cuarto lugar - Coreixample Spot Festival</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -79,7 +92,7 @@ import Layout from "../layouts/Layout.astro";
       { delay: 0.8, duration: 0.8, ease: "easeInOut" },
     );
     animate(
-      ".ucu",
+      ".goals-line",
       { y: [50, 0], opacity: [0, 1] },
       { delay: 1, duration: 0.8, ease: "easeInOut" },
     );
@@ -97,7 +110,7 @@ import Layout from "../layouts/Layout.astro";
 </script>
 <style>
   .line {
-    width: 10rem;
+    width: 5rem;
     height: 1px;
     background-color: #00000059;
   }
@@ -106,13 +119,17 @@ import Layout from "../layouts/Layout.astro";
     font-size: 18px;
     font-weight: 700;
   }
-  .ucu {
+  .goals-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .ucu-logo {
     width: 8rem;
+    height: auto;
+  }
+  .Coreixample-logo {
+    width: 3rem;
     height: auto;
   }
   .title-about {
@@ -158,24 +175,22 @@ import Layout from "../layouts/Layout.astro";
   }
   .blur-overlay {
     background: linear-gradient(#88744a00, #ffffff70);
-    height: 75%;
+    height: 100%;
     position: absolute;
-    width: 90%;
+    width: 80%;
     z-index: 1;
     border-radius: 2rem;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-
-    /* Le agregamos bottom: 0 para asegurar que se ancle abajo 
-       y el efecto de "crecer" se vea desde abajo hacia arriba */
-    bottom: 25%; /* Ajusta esto según dónde termine tu imagen */
+    bottom: 25%;
+    top: 0;
     left: 0;
   }
   .picture-aboutMe img {
-    width: 90%;
-    height: 75%;
+    width: 80%;
+    height: 100%;
     object-fit: cover;
     border-radius: 2rem;
   }
@@ -186,27 +201,30 @@ import Layout from "../layouts/Layout.astro";
   }
   .text-about p {
     font-family: "PP Mori Regular", sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.3;
     padding-left: 10rem;
+  }
+  .goals-lines-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
   @media (max-width: 768px) {
     .text-about p {
       font-size: 12px;
       line-height: 1.3;
     }
-    /* Permite que los hijos de .text-about interactúen directamente con la grilla */
     .text-about {
       display: contents;
     }
-
-    /* Hace que SOLAMENTE la línea divisoria y el contenedor de logros ocupen el 100% */
-    .hr,
     .goals-container {
       grid-column: 1 / -1;
-      width: 100%;
+      padding-bottom: 5rem;
     }
-
+    .line {
+      width: 50%;
+    }
     .picture-aboutMe {
       justify-content: center;
       margin-bottom: 2rem;
@@ -238,7 +256,7 @@ import Layout from "../layouts/Layout.astro";
       width: 5rem;
     }
 
-    .ucu {
+    .goals-line {
       width: 100%;
     }
 

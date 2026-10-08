@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import CustomCursor from "../components/CustomCursor.astro";
 
 interface Props {
   title?: string;
@@ -19,6 +20,8 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
     <ClientRouter />
   </head>
   <body>
+    <CustomCursor />
+
     <header class="navbar">
       <div
         class={`${activeTab === "gallery" ? "container-navs" : "container-navs-inner"}`}
@@ -58,6 +61,7 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
 </html>
 
 <style is:global>
+
   .brand-title {
     font-family: "PP Kyoto Light";
     font-weight: 200;

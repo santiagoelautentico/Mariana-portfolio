@@ -43,7 +43,7 @@ const cantFotos = todasLasFotos.length;
   </section>
   <section class="gallery-container">
     <div class="gallery-viewport" id="gallery-viewport">
-      <div class="gallery-track" id="gallery-track">
+      <div class="gallery-track" id="gallery-track" data-drag>
         {
           todasLasFotos.map((fotoUrl, index) => (
             <div class:list={["project-card", { "is-active": index === 0 }]}>

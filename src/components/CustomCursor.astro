@@ -1,0 +1,152 @@
+<div id="cursor" aria-hidden="true" transition:persist>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#fff"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M4 12h15M13 6l6 6-6 6"></path>
+  </svg>
+</div>
+
+<style is:global>
+  @media (hover: hover) and (pointer: fine) {
+    html,
+    body,
+    a,
+    button,
+    [role="button"],
+    [data-drag],
+    input,
+    textarea,
+    select,
+    [contenteditable="true"] {
+      cursor: none;
+    }
+  }
+
+  #cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    translate: -50% -50%; /* centrado independiente del tamaño */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f599c6;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0);
+    transition:
+      width 0.25s ease,
+      height 0.25s ease,
+      border-radius 0.25s ease,
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      opacity 0.2s ease;
+  }
+
+  #cursor svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 0.2s ease,
+      transform 0.25s ease;
+  }
+
+  #cursor.is-visible {
+    opacity: 1;
+  }
+
+  #cursor.is-hovering {
+    width: 32px;
+    height: 32px;
+    background: rgba(245, 153, 198, 0.35);
+    border-color: #f599c6;
+  }
+
+  /* Estado drag: círculo grande con la flecha */
+  #cursor.is-drag {
+    width: 64px;
+    height: 64px;
+    background: rgba(245, 153, 198, 0.6);
+    border-color: #f599c6;
+  }
+  #cursor.is-drag svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Feedback mientras se arrastra */
+  #cursor.is-drag.is-pressed {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Estado texto: línea vertical */
+  #cursor.is-text {
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+    background: #f599c6;
+    border-color: transparent;
+  }
+  #cursor.is-text svg {
+    opacity: 0;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    #cursor {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const clickable =
+    "a, button, select, [role='button'], input[type='submit'], input[type='button'], input[type='checkbox'], input[type='radio'], summary, label[for]";
+
+  const textField =
+    "input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']):not([type='range']), textarea, [contenteditable='true']";
+
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const getCursor = () => document.getElementById("cursor");
+
+    window.addEventListener("mousemove", (e) => {
+      const cursor = getCursor();
+      if (!cursor) return;
+
+      cursor.classList.add("is-visible");
+      // El centrado lo hace `translate` en CSS, acá solo va la posición
+      cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+
+      const target = e.target as HTMLElement;
+      const isText = !!target.closest(textField);
+      const isDrag = !isText && !!target.closest("[data-drag]");
+      const isClickable = !isText && !isDrag && !!target.closest(clickable);
+
+      cursor.classList.toggle("is-text", isText);
+      cursor.classList.toggle("is-drag", isDrag);
+      cursor.classList.toggle("is-hovering", isClickable);
+    });
+
+    window.addEventListener("mousedown", () =>
+      getCursor()?.classList.add("is-pressed"),
+    );
+    window.addEventListener("mouseup", () =>
+      getCursor()?.classList.remove("is-pressed"),
+    );
+    document.addEventListener("mouseleave", () =>
+      getCursor()?.classList.remove("is-visible"),
+    );
+  }
+</script>

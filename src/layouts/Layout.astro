@@ -57,11 +57,29 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
     <main>
       <slot />
     </main>
+    <script>
+      const THRESHOLD = 20; // px de scroll a partir del cual cambia
+
+      const update = () => {
+        document.body.classList.toggle(
+          "is-scrolled",
+          window.scrollY > THRESHOLD,
+        );
+      };
+
+      window.addEventListener("scroll", update, { passive: true });
+      document.addEventListener("astro:page-load", update);
+    </script>
   </body>
 </html>
 
 <style is:global>
-
+  body.is-scrolled .pill {
+    color: #f4f3f0;
+  }
+  body.is-scrolled .brand-title {
+    color: rgb(245, 153, 198);
+  }
   .brand-title {
     font-family: "PP Kyoto Light";
     font-weight: 200;
@@ -154,6 +172,9 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
     transition: all 0.3s ease;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    transition:
+      all 0.3s ease,
+      color 0.3s ease;
   }
 
   .pill.active {
@@ -164,6 +185,20 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
   .brand-title {
     font-family: "PP Kyoto Light";
     font-weight: 200;
+    transition: color 0.3s ease;
+  }
+  .is-scrolled .pill,
+  .is-scrolled .brand-title {
+    color: #fff;
+  }
+  .is-scrolled .pill {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .is-scrolled .pill.active {
+    background-color: rgba(245, 153, 197, 0.7);
+    border: 1px solid rgb(245, 153, 198);
   }
   .container-navs {
     display: flex;
@@ -178,7 +213,9 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
   }
   @media (max-width: 768px) {
     header.navbar {
-      padding-inline: 1rem;
+      padding-top: 2rem;
+      padding-block: 0;
+      padding-inline: 0;
     }
     .nav-pills {
       gap: 1rem;
@@ -195,8 +232,10 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
     .container-navs-inner {
       flex-direction: column-reverse;
       gap: 1rem;
-      align-items: baseline;
-      padding-inline: 2rem;
+      padding-top: 2rem;
+    }
+    .container-navs {
+      align-items: center;
     }
   }
 </style>

@@ -14,7 +14,7 @@ const { proyecto } = Astro.props;
 const proyectos = await getCollection("proyectos");
 ---
 
-<Layout title="Mariana Ferrari — Galería" activeTab="gallery">
+<Layout title="Mariana Ferrari — Fotografa" activeTab="gallery">
   <h1
     slot="header-title"
     class="brand-title home-title mask-reveal"
@@ -70,7 +70,7 @@ const proyectos = await getCollection("proyectos");
     flex-direction: column-reverse;
     justify-content: center;
     gap: 1.5rem;
-    padding-top: 3rem;
+    padding-top: 2rem;
   }
 </style>
 
@@ -134,19 +134,6 @@ const proyectos = await getCollection("proyectos");
     color: #2e2e2e;
     padding-bottom: 2rem;
   }
-  @media (max-width: 768px) {
-    .brand-title {
-      font-size: 4rem;
-      line-height: 1.5;
-    }
-    .gallery-track {
-      padding-left: 1rem;
-    }
-    .image-wrapper {
-      width: 20em;
-      height: 15em;
-    }
-  }
   .brand-title {
     font-family: "PP Kyoto Light";
     color: #2e2e2e;
@@ -157,8 +144,33 @@ const proyectos = await getCollection("proyectos");
     margin: 0;
   }
   @media (max-width: 768px) {
+    .brand-title {
+      font-size: 4rem;
+      line-height: 1.5;
+    }
+    .gallery-track {
+      padding-left: 1rem;
+    }
+    .image-wrapper {
+      width: 20em;
+      height: 18em;
+    }
     .home-title {
-      font-size: 3rem;
+      font-size: 1.2rem;
+    }
+    .blur {
+      width: 2rem;
+      height: 100%;
+    }
+    .home-title {
+      line-height: 1;
+      padding-bottom: 1rem;
+    }
+    .gallery-track {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-left: 0;
     }
   }
 </style>

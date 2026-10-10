@@ -58,7 +58,7 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
       <slot />
     </main>
     <script>
-      const THRESHOLD = 20; // px de scroll a partir del cual cambia
+      const THRESHOLD = 40; // px de scroll a partir del cual cambia
 
       const update = () => {
         document.body.classList.toggle(
@@ -78,13 +78,15 @@ const { title = "Mariana Ferrari — Portfolio", activeTab = "gallery" } =
     color: #f4f3f0;
   }
   body.is-scrolled .brand-title {
-    color: rgb(245, 153, 198);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
   .brand-title {
     font-family: "PP Kyoto Light";
     font-weight: 200;
     line-height: 1;
     margin: 0;
+    transition: opacity 0.3s ease;
   }
 
   ::view-transition-old(root),
